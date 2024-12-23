@@ -1,24 +1,12 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
+    "./src/app/**/*.{js,ts,jsx,tsx}",    // Include all files in the src/app folder
+    "./src/pages/**/*.{js,ts,jsx,tsx}",  // Include all files in the src/pages folder
+    "./src/components/**/*.{js,ts,jsx,tsx}", // Include all components
   ],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
-      },
-      colors: {
-        'primary-color': '#ff6b00',
-        'background-light': '#f9f9f9',
-        'text-dark': '#2c3e50',
-        'text-light': '#ffffff',
-        'secondary': '#007bff',
-      },
-      backgroundImage: {
-        'hero-pattern': "url('path/to/hero-pattern.jpg')",
-      },
-    },
+    extend: {},
   },
   plugins: [],
-}
+};

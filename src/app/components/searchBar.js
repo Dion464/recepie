@@ -10,6 +10,7 @@ export default function SearchBar({ setGridRecipes }) {
         `https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}`
       );
       setGridRecipes(response.data.results);
+      setQuery(""); // Clear the input after search
     } catch (error) {
       console.error(error);
     }
@@ -22,11 +23,11 @@ export default function SearchBar({ setGridRecipes }) {
         placeholder="Search for recipes..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-full sm:w-2/3 lg:w-1/2 border-2 border-gray-300 p-3 rounded-l-full focus:outline-none focus:ring-2 focus:ring-primary"
+        className="w-full sm:w-2/3 lg:w-1/2 border-2 border-gray-300 p-3 rounded-l-full focus:outline-none focus:ring-2 focus:ring-orange-500"
       />
       <button
         onClick={handleSearch}
-        className="bg-primary text-white px-6 py-3 rounded-r-full font-semibold hover:bg-secondary transition"
+        className="bg-orange-500 text-white px-6 py-3 rounded-r-full font-semibold hover:bg-orange-600 transition"
       >
         Search
       </button>

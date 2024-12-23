@@ -1,5 +1,5 @@
-// src/app/layout.js
-import './styles/globals.css'; // Correct path to import global styles
+// Correct import path from 'src/app'
+import './globals.css';  // Since layout.js is in the same 'app' folder
 
 export default function Layout({ children }) {
   return (
