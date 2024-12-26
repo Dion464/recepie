@@ -13,8 +13,12 @@ const FavoritesPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-center text-black-500 mb-8">Favorite Recipes</h1>
-      
+      {/* Header Section */}
+      <header className="text-center mb-8">
+        <h1 className="text-4xl font-bold text-orange-500 mb-2">Your Favorite Recipes</h1>
+        <p className="text-lg text-gray-600">Explore your saved recipes and create magic in the kitchen!</p>
+      </header>
+
       {/* Grid Layout */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {favorites.length > 0 ? (
@@ -30,7 +34,7 @@ const FavoritesPage = () => {
               />
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{recipe.title}</h3>
-                <p className="text-gray-500 mb-4">{recipe.readyInMinutes} min</p>
+                <p className="text-gray-500 mb-4">Ready in {recipe.readyInMinutes} min</p>
                 <Link
                   href={`/recepie/${recipe.id}`}
                   className="inline-block bg-orange-500 text-white text-center py-2 px-6 rounded-full hover:bg-orange-600 transition duration-200"
@@ -38,19 +42,45 @@ const FavoritesPage = () => {
                   View Recipe
                 </Link>
               </div>
-              
             </div>
           ))
         ) : (
-          <p className="text-center text-lg text-gray-500 col-span-full">You have no favorite recipes yet.</p>
+          <div className="col-span-full text-center">
+            <p className="text-lg text-gray-500 mb-4">
+              You haven't added any favorites yet. Start exploring and save your favorite recipes!
+            </p>
+            <Link
+              href="/recipes"
+              className="inline-block bg-orange-500 text-white py-2 px-6 rounded-full hover:bg-orange-600 transition"
+            >
+              Browse Recipes
+            </Link>
+          </div>
         )}
       </div>
-      <button
-          onClick={() => window.history.back()}
-          className="block mt-4 text-center bg-orange-500 text-white py-2 px-6 rounded hover:bg-orange-600 transition"
+
+      {/* Additional Section */}
+      <section className="mt-12 text-center bg-gray-50 py-8 rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Why Save Favorites?</h2>
+        <p className="text-gray-600 max-w-xl mx-auto">
+          Save recipes you love, revisit them anytime, and create a personalized collection of go-to dishes.
+          Your favorites make meal planning easier and more fun!
+        </p>
+        <Link
+          href="/"
+          className="mt-4 inline-block bg-orange-500 text-white py-2 px-6 rounded-full hover:bg-orange-600 transition"
         >
-          Go Back
-        </button>
+          Discover More Recipes
+        </Link>
+      </section>
+
+      {/* Back Button */}
+      <button
+        onClick={() => window.history.back()}
+        className="block mx-auto mt-8 bg-gray-800 text-white py-2 px-6 rounded hover:bg-gray-900 transition"
+      >
+        Go Back
+      </button>
     </div>
   );
 };
