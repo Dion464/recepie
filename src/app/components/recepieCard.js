@@ -54,14 +54,14 @@ export default function RecipeCard({ recipe }) {
 
         {isFavorite ? (
           <Image
-            src="/bookmark.svg" 
+            src="/favorite.png" 
             alt="Save"
             width={24}
             height={24}
           />
         ) : (
           <Image
-            src="/bookmark-save.svg" 
+            src="/favorite (1).png"
             alt="Saved"
             width={24}
             height={24}

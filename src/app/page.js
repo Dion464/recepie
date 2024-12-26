@@ -4,14 +4,13 @@ import Header from "../app/components/header";
 import SearchBar from "../app/components/searchBar";
 import FeaturedRecipe from "../app/components/featuredRecepies";
 import RecipeList from "../app/components/recepieList";
-
 import axios from "axios";
 import Footer from "../app/components/footer";
 
 export default function Home() {
   const [featuredRecipe, setFeaturedRecipe] = useState(null);
   const [gridRecipes, setGridRecipes] = useState([]);
-  const [selectedCuisine, setSelectedCuisine] = useState(null); // State for selected cuisine filter
+  const [selectedCuisine, setSelectedCuisine] = useState(null);
 
   // Function to handle filtering of recipes by selected cuisine
   const handleCuisineFilter = (cuisine) => {
@@ -26,7 +25,7 @@ export default function Home() {
         );
         setFeaturedRecipe(response.data.recipes[0]);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching featured recipe:", error);
       }
     };
     fetchFeaturedRecipe();
@@ -42,11 +41,11 @@ export default function Home() {
         const response = await axios.get(url);
         setGridRecipes(response.data.recipes);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching grid recipes:", error);
       }
     };
     fetchGridRecipes();
-  }, [selectedCuisine]); // Re-fetch recipes when the selected cuisine changes
+  }, [selectedCuisine]);
 
   if (!featuredRecipe || gridRecipes.length === 0) {
     return <div className="text-center py-20">Loading...</div>;
@@ -57,7 +56,6 @@ export default function Home() {
       <Header />
       <div className="container mx-auto px-6 lg:px-16 flex-1">
         <SearchBar setGridRecipes={setGridRecipes} />
-     
         <section className="mt-8">
           <h1 className="text-4xl font-bold text-gray-800">Discover Recipes</h1>
           <p className="text-lg text-gray-600 mt-2">
@@ -73,7 +71,7 @@ export default function Home() {
           <RecipeList recipes={gridRecipes} />
         </section>
       </div>
-      <Footer /> {/* Footer will now be pushed to the bottom */}
+      <Footer />
     </div>
   );
 }

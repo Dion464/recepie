@@ -11,21 +11,22 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white shadow-md p-6">
-      <nav className="flex items-center justify-between flex-wrap">
-        <div className="flex items-center space-x-2">
-          <img src="/logo.png" alt="Logo" className="h-8 w-8" />
-          <span className="text-2xl font-bold text-orange-500">FoodApp</span>
-        </div>
+    <header className="bg-transparent shadow-md p-6">
+    <nav className="flex items-center justify-between flex-wrap">
+      <div className="flex items-center space-x-2">
+        <img src="/logo.png" alt="Logo" className="h-8 w-8" />
+        <span className="text-2xl font-bold text-orange-500">FoodApp</span>
+      </div>
+ 
 
-        {/* Desktop Menu */}
+   
         <ul className="flex space-x-6 text-gray-700 font-medium hidden md:flex">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/favorite">Favorites</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
 
-        {/* Mobile Menu Button (Hamburger) */}
+ 
         <div className="md:hidden">
           <button onClick={toggleMenu} className="text-gray-700">
             <svg
@@ -46,7 +47,7 @@ const Header = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+   
       {isMenuOpen && (
         <ul className="flex flex-col space-y-4 mt-4 md:hidden">
           <li><Link href="/">Home</Link></li>

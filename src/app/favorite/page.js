@@ -13,7 +13,7 @@ const FavoritesPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-center text-orange-500 mb-8">Favorite Recipes</h1>
+      <h1 className="text-4xl font-bold text-center text-black-500 mb-8">Favorite Recipes</h1>
       
       {/* Grid Layout */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

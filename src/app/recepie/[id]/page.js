@@ -40,7 +40,7 @@ export default function RecipeDetails() {
               className="w-full h-auto object-cover rounded-md shadow-md"
             />
           </div>
-          {/* Recipe Details */}
+        
           <div className="flex-1 mt-6 sm:mt-0">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Ingredients</h2>
             <ul className="list-disc pl-5 text-gray-600 space-y-2">

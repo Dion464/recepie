@@ -34,12 +34,12 @@ const AboutPage = () => {
           </p>
         </div>
         <div className="md:w-1/2">
-          <img
-            src="/logo.png" // Using the logo from the public folder
-            alt="FoodApp Logo"
-            className="w-40 mx-auto"
-          />
-        </div>
+  <img
+    src="/logo.png" // Using the logo from the public folder
+    alt="FoodApp Logo"
+    className="w-40 mx-auto"
+  />
+</div>
       </div>
 
       {/* Mission Section */}
