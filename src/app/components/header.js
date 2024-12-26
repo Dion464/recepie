@@ -1,4 +1,5 @@
-import Link from 'next/link';
+// app/layout.js or wherever your Header is
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -10,9 +11,8 @@ const Header = () => {
         </div>
         <ul className="flex space-x-6 text-gray-700 font-medium">
           <li><Link href="/">Home</Link></li>
-          <li><Link href="/menu">Menu</Link></li>
-          <li><Link href="/service">Service</Link></li>
-          <li><Link href="/shop">Shop</Link></li>
+          <li><Link href="/favorite">Favorites</Link></li>
+          <li><Link href="/about">About</Link></li> 
         </ul>
       </nav>
     </header>

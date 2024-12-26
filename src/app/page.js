@@ -4,7 +4,7 @@ import Header from "../app/components/header";
 import SearchBar from "../app/components/searchBar";
 import FeaturedRecipe from "../app/components/featuredRecepies";
 import RecipeList from "../app/components/recepieList";
-import CuisineFilter from "./components/couisinFilter";  // Import the CuisineFilter component
+
 import axios from "axios";
 import Footer from "../app/components/footer";
 
@@ -57,7 +57,7 @@ export default function Home() {
       <Header />
       <div className="container mx-auto px-6 lg:px-16 flex-1">
         <SearchBar setGridRecipes={setGridRecipes} />
-        <CuisineFilter onFilter={handleCuisineFilter} /> {/* Add the CuisineFilter component */}
+     
         <section className="mt-8">
           <h1 className="text-4xl font-bold text-gray-800">Discover Recipes</h1>
           <p className="text-lg text-gray-600 mt-2">

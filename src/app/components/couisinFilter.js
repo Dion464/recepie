@@ -11,23 +11,28 @@ export default function CuisineFilter({ onFilter }) {
         const response = await fetch(
           `https://api.spoonacular.com/recipes/cuisines?apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}`,
           {
-            method: "GET", // Use 'GET' for the API call
+            method: "GET",
             headers: {
-              "Content-Type": "application/json", // Ensure the response type is JSON
-              "Accept": "application/json" // Specify acceptable response format
-            }
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+            },
           }
         );
 
+        // Log the status code and response body
+        console.log("Response Status:", response.status); 
         if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
+          const errorText = await response.text();
+          console.error("Error Response Body:", errorText); // Log error body for more details
+          throw new Error(`Error: ${response.statusText} (Status Code: ${response.status})`);
         }
 
         const data = await response.json();
-        setCuisines(data.cuisines || []); // Adjust according to API response
+        setCuisines(data.cuisines || []);
         setLoading(false);
       } catch (error) {
-        setError(error.message);
+        console.error("Error fetching cuisines:", error); // Log detailed error
+        setError(error.message || "An error occurred");
         setLoading(false);
       }
     };
