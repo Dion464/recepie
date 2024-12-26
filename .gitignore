@@ -30,12 +30,24 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# remove this if you need to commit .env files
+# .env*
 
 # vercel
 .vercel
 
-# typescript
+# typescript build info
 *.tsbuildinfo
-next-env.d.ts
+
+# Optional: Add cache files
+cache/
+temp/
+
+# Optional: Add other files
+logs/
+
+# Optional: Add custom build folders
+/public/build
+/.vercel/output
+
+# Ensure to exclude specific local files if necessary
