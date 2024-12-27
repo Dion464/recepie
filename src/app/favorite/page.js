@@ -5,11 +5,16 @@ import Link from "next/link";
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
+  const [imageError, setImageError] = useState(false); // Track image error state
 
   useEffect(() => {
     const savedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
     setFavorites(savedFavorites);
   }, []);
+
+  const handleImageError = () => {
+    setImageError(true); // Set image error state to true when image fails to load
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -28,9 +33,10 @@ const FavoritesPage = () => {
               className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out"
             >
               <img
-                src={recipe.image}
+                src={imageError ? "/default-recipe-big.png" : recipe.image} // Use fallback image
                 alt={recipe.title}
                 className="w-full h-48 object-cover"
+                onError={handleImageError} // Trigger error handler on image error
               />
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{recipe.title}</h3>

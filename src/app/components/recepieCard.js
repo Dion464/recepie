@@ -44,7 +44,7 @@ export default function RecipeCard({ recipe }) {
     <div className="relative bg-white rounded-lg overflow-hidden shadow-lg w-full sm:w-72 mx-auto hover:scale-105 transition duration-300 ease-in-out">
       {/* Image Section with Fallback */}
       <img
-        src={imageError ? "/default-image.jpg" : recipe.image}
+        src={imageError || !recipe.image ? "/default-recipe-big.png" : recipe.image}
         alt={recipe.title}
         className="w-full h-40 object-cover"
         onError={handleImageError}
