@@ -105,11 +105,11 @@ const AboutPage = () => {
         <div className="flex justify-center space-x-8">
           <div className="flex flex-col items-center">
             <h4 className="text-xl font-semibold text-gray-700">Ardit Avdimetaj</h4>
-            <p className="text-gray-500">Chef & Recipe Creator</p>
+            <p className="text-gray-500">Recipe Creator</p>
           </div>
           <div className="flex flex-col items-center">
             <h4 className="text-xl font-semibold text-gray-700">Dion Curri </h4>
-            <p className="text-gray-500">Nutritionist & Content Developer</p>
+            <p className="text-gray-500"> Content Developer</p>
           </div>
         </div>
       </div>

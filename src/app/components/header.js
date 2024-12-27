@@ -12,21 +12,18 @@ const Header = () => {
 
   return (
     <header className="bg-transparent shadow-md p-6">
-    <nav className="flex items-center justify-between flex-wrap">
-      <div className="flex items-center space-x-2">
-        <img src="/logo.png" alt="Logo" className="h-8 w-8" />
-        <span className="text-2xl font-bold text-orange-500">FoodApp</span>
-      </div>
- 
+      <nav className="flex items-center justify-between flex-wrap">
+        <div className="flex items-center space-x-2">
+          <img src="/logo.png" alt="Logo" className="h-8 w-8" />
+          <span className="text-2xl font-bold text-orange-500">FoodApp</span>
+        </div>
 
-   
         <ul className="flex space-x-6 text-gray-700 font-medium hidden md:flex">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/favorite">Favorites</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
 
- 
         <div className="md:hidden">
           <button onClick={toggleMenu} className="text-gray-700">
             <svg
@@ -37,9 +34,9 @@ const Header = () => {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round" // updated
+                strokeLinejoin="round" // updated
+                strokeWidth="2" // updated
                 d="M4 6h16M4 12h16M4 18h16"
               ></path>
             </svg>
@@ -47,7 +44,6 @@ const Header = () => {
         </div>
       </nav>
 
-   
       {isMenuOpen && (
         <ul className="flex flex-col space-y-4 mt-4 md:hidden">
           <li><Link href="/">Home</Link></li>
