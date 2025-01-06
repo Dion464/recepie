@@ -1,60 +1,25 @@
-import { create } from "zustand";
+"use client";
 
-const useRecipeStore = create((set) => ({
-  // Initial state
-  favorites: JSON.parse(localStorage.getItem("favorites")) || [],
-  imageErrors: {},
+import { useEffect } from "react";
+import useRecipeStore from "@/app/store/useStore";
 
-  // Actions for favorites
-  addFavorite: (recipe) => {
-    set((state) => {
-      const updatedFavorites = [...state.favorites, recipe];
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-      return { favorites: updatedFavorites };
-    });
-  },
+const FavoritesPage = () => {
+  const { favorites, initializeFavorites, addFavorite } = useRecipeStore();
 
-  removeFavorite: (recipeId) => {
-    set((state) => {
-      const updatedFavorites = state.favorites.filter(
-        (recipe) => recipe.id !== recipeId
-      );
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-      return { favorites: updatedFavorites };
-    });
-  },
+  useEffect(() => {
+    initializeFavorites(); // Load favorites after component mounts
+  }, [initializeFavorites]);
 
-  // Check if a recipe is in the favorites
-  isFavorite: (recipeId) => {
-    const { favorites } = useRecipeStore.getState();
-    return favorites.some((recipe) => recipe.id === recipeId);
-  },
+  return (
+    <div>
+      <h1>Favorites</h1>
+      <ul>
+        {favorites.map((recipe) => (
+          <li key={recipe.id}>{recipe.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-  // Actions for image error handling
-  setImageError: (recipeId) => {
-    set((state) => ({
-      imageErrors: { ...state.imageErrors, [recipeId]: true },
-    }));
-  },
-
-  resetImageError: (recipeId) => {
-    set((state) => {
-      const { [recipeId]: _, ...remainingErrors } = state.imageErrors;
-      return { imageErrors: remainingErrors };
-    });
-  },
-
-  // Handling recipe details
-  recipeDetails: {},
-
-  setRecipeDetails: (id, recipe) => {
-    set((state) => ({
-      recipeDetails: {
-        ...state.recipeDetails,
-        [id]: recipe,
-      },
-    }));
-  },
-}));
-
-export default useRecipeStore;
+export default FavoritesPage;
