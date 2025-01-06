@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
-  const [imageError, setImageError] = useState(false); // Track image error state
+  const [imageError, setImageError] = useState(false); 
 
   useEffect(() => {
     const savedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -13,18 +13,18 @@ const FavoritesPage = () => {
   }, []);
 
   const handleImageError = () => {
-    setImageError(true); // Set image error state to true when image fails to load
+    setImageError(true); 
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Header Section */}
+
       <header className="text-center mb-8">
         <h1 className="text-4xl font-bold text-orange-500 mb-2">Your Favorite Recipes</h1>
         <p className="text-lg text-gray-600">Explore your saved recipes and create magic in the kitchen!</p>
       </header>
 
-      {/* Grid Layout */}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {favorites.length > 0 ? (
           favorites.map((recipe, index) => (
@@ -33,10 +33,10 @@ const FavoritesPage = () => {
               className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out"
             >
               <img
-                src={imageError ? "/default-recipe-big.png" : recipe.image} // Use fallback image
+                src={imageError ? "/default-recipe-big.png" : recipe.image} 
                 alt={recipe.title}
                 className="w-full h-48 object-cover"
-                onError={handleImageError} // Trigger error handler on image error
+                onError={handleImageError} 
               />
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{recipe.title}</h3>
@@ -65,7 +65,6 @@ const FavoritesPage = () => {
         )}
       </div>
 
-      {/* Additional Section */}
       <section className="mt-12 text-center bg-gray-50 py-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Why Save Favorites?</h2>
         <p className="text-gray-600 max-w-xl mx-auto">
@@ -80,7 +79,7 @@ const FavoritesPage = () => {
         </Link>
       </section>
 
-      {/* Back Button */}
+ 
       <button
         onClick={() => window.history.back()}
         className="block mx-auto mt-8 bg-gray-800 text-white py-2 px-6 rounded hover:bg-gray-900 transition"

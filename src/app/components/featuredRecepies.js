@@ -1,16 +1,12 @@
-import { useState } from 'react';
 import Link from 'next/link';
+import useRecipeStore from "@/app/store/useStore";
 
 const FeaturedRecipe = ({ recipe }) => {
-  const [imageError, setImageError] = useState(false);
-
-  const handleImageError = () => {
-    setImageError(true);
-  };
+  const { imageErrors, setImageError } = useRecipeStore();
+  const handleImageError = () => setImageError(recipe.id);
 
   return (
-    <section className="bg-white p-8 md:p-16 rounded-lg shadow-xl flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0">
-      {/* Text Section (Left) */}
+    <section className="bg-white p-8 md:p-16 rounded-lg shadow-xl flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 animate-fadeIn">
       <div className="flex flex-col w-full md:w-1/2 space-y-6">
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
           {recipe.title}
@@ -39,13 +35,12 @@ const FeaturedRecipe = ({ recipe }) => {
         </Link>
       </div>
 
-      {/* Image Section (Right) */}
-      <div className="w-full md:w-1/2 mt-6 md:mt-0 md:ml-6 rounded-lg overflow-hidden shadow-md">
+      <div className="w-full md:w-1/2 mt-6 md:mt-0 md:ml-6 rounded-lg overflow-hidden shadow-md animate-slideInFromRight">
         <img
-          src={imageError ? "/default-recipe-big.png" : recipe.image} // Fallback image logic
+          src={imageErrors[recipe.id] ? "/default-recipe-big.png" : recipe.image}
           alt={recipe.title}
           className="w-full h-full object-cover object-center rounded-lg transition-transform duration-500 ease-in-out transform hover:scale-105"
-          onError={handleImageError} // Trigger fallback on error
+          onError={handleImageError}
         />
       </div>
     </section>

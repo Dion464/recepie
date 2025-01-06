@@ -6,7 +6,22 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}", // Include all components
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        fadeIn: 'fadeIn 1s ease-out forwards',
+        slideInFromRight: 'slideInFromRight 0.8s ease-out forwards',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+        slideInFromRight: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+      },
+    },
   },
   plugins: [],
 };
