@@ -45,7 +45,6 @@ const FeaturedRecipe = ({ recipe }) => {
           both beginners and experienced cooks alike.
         </p>
 
-        {/* Favorite button */}
         <div className="flex items-center space-x-4 mt-4">
           <button
             className="inline-block text-white p-2 rounded-full "
@@ -58,7 +57,7 @@ const FeaturedRecipe = ({ recipe }) => {
             <img
               src={isFavorite(recipe.id) ? "/favorite2.webp" : "/favorit.jpg"}
               alt="Favorite"
-              className="w-6 h-6"
+              className="w-8 h-8"
             />
           </button>
 
