@@ -12,11 +12,6 @@ export default function Home() {
   const [gridRecipes, setGridRecipes] = useState([]);
   const [selectedCuisine, setSelectedCuisine] = useState(null);
 
-  // Function to handle filtering of recipes by selected cuisine
-  const handleCuisineFilter = (cuisine) => {
-    setSelectedCuisine(cuisine);
-  };
-
   useEffect(() => {
     const fetchFeaturedRecipe = async () => {
       try {
@@ -63,11 +58,15 @@ export default function Home() {
           </p>
         </section>
         <section className="mt-10">
-          <h2 className="text-2xl font-semibold text-gray-700">Featured Recipe</h2>
+          <h2 className="text-2xl font-semibold text-gray-700">
+            Featured Recipe
+          </h2>
           <FeaturedRecipe recipe={featuredRecipe} />
         </section>
         <section className="mt-12">
-          <h2 className="text-2xl font-semibold text-gray-700">Additional Recipes</h2>
+          <h2 className="text-2xl font-semibold text-gray-700">
+            Additional Recipes
+          </h2>
           <RecipeList recipes={gridRecipes} />
         </section>
       </div>

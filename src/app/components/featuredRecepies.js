@@ -1,9 +1,23 @@
-import Link from 'next/link';
+import Link from "next/link";
 import useRecipeStore from "@/app/store/useStore";
+import { useState, useEffect } from "react";
 
 const FeaturedRecipe = ({ recipe }) => {
-  const { imageErrors, setImageError } = useRecipeStore();
-  const handleImageError = () => setImageError(recipe.id);
+  const { favorites, addFavorite, removeFavorite, isFavorite, setImageError } =
+    useRecipeStore();
+  const [imageError, setImageErrorState] = useState(false); // Local state for image errors
+
+  // Handle image loading errors
+  const handleImageError = () => {
+    setImageErrorState(true);
+    setImageError(recipe.id); // Update the store when an image fails to load
+  };
+
+  useEffect(() => {
+    if (isFavorite(recipe.id)) {
+      setImageErrorState(false); // Reset image error if it's a favorite
+    }
+  }, [recipe.id, isFavorite]);
 
   return (
     <section className="bg-white p-8 md:p-16 rounded-lg shadow-xl flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 animate-fadeIn">
@@ -12,10 +26,13 @@ const FeaturedRecipe = ({ recipe }) => {
           {recipe.title}
         </h1>
         <p className="text-lg text-gray-600">
-          Discover a delightful culinary experience with this recipe! {recipe.description}
+          Discover a delightful culinary experience with this recipe!{" "}
+          {recipe.description}
         </p>
         <div className="text-gray-500 text-sm">
-          <p><strong>What you'll need:</strong></p>
+          <p>
+            <strong>What you'll need:</strong>
+          </p>
           <ul className="list-disc pl-6">
             <li>Fresh ingredients</li>
             <li>A pinch of creativity</li>
@@ -24,20 +41,40 @@ const FeaturedRecipe = ({ recipe }) => {
         </div>
 
         <p className="text-gray-700 mt-4">
-          This recipe is designed to be simple, flavorful, and enjoyable for both beginners and experienced cooks alike.
+          This recipe is designed to be simple, flavorful, and enjoyable for
+          both beginners and experienced cooks alike.
         </p>
 
-        <Link
-          href={`/recepie/${recipe.id}`}
-          className="mblock mt-4 text-center bg-orange-500 text-white py-2 px-6 rounded-full hover:bg-orange-600 transition duration-200"
-        >
-          View Recipe Details
-        </Link>
+        {/* Favorite button */}
+        <div className="flex items-center space-x-4 mt-4">
+          <button
+            className="inline-block text-white p-2 rounded-full "
+            onClick={() =>
+              isFavorite(recipe.id)
+                ? removeFavorite(recipe.id)
+                : addFavorite(recipe)
+            }
+          >
+            <img
+              src={isFavorite(recipe.id) ? "/favorite2.webp" : "/favorit.jpg"}
+              alt="Favorite"
+              className="w-6 h-6"
+            />
+          </button>
+
+          {/* View recipe button */}
+          <Link
+            href={`/recepie/${recipe.id}`}
+            className="mblock text-center bg-orange-500 text-white py-2 px-6 rounded-full hover:bg-orange-600 transition duration-200"
+          >
+            View Recipe Details
+          </Link>
+        </div>
       </div>
 
       <div className="w-full md:w-1/2 mt-6 md:mt-0 md:ml-6 rounded-lg overflow-hidden shadow-md animate-slideInFromRight">
         <img
-          src={imageErrors[recipe.id] ? "/default-recipe-big.png" : recipe.image}
+          src={imageError ? "/default-recipe-big.png" : recipe.image}
           alt={recipe.title}
           className="w-full h-full object-cover object-center rounded-lg transition-transform duration-500 ease-in-out transform hover:scale-105"
           onError={handleImageError}
