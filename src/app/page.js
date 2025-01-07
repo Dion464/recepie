@@ -1,76 +1,49 @@
 "use client";
-import { useState, useEffect } from "react";
-import Header from "../app/components/header";
-import SearchBar from "../app/components/searchBar";
-import FeaturedRecipe from "../app/components/featuredRecepies";
-import RecipeList from "../app/components/recepieList";
-import axios from "axios";
-import Footer from "../app/components/footer";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import RecipeCard from './components/recepieCard';
+import SearchBar from './components/searchBar';
+import FeaturedRecipe from './components/featuredRecepies';
 
 export default function Home() {
+  const [recipes, setRecipes] = useState([]);
   const [featuredRecipe, setFeaturedRecipe] = useState(null);
-  const [gridRecipes, setGridRecipes] = useState([]);
-  const [selectedCuisine, setSelectedCuisine] = useState(null);
 
   useEffect(() => {
-    const fetchFeaturedRecipe = async () => {
+    const fetchInitialRecipes = async () => {
       try {
         const response = await axios.get(
-          `https://api.spoonacular.com/recipes/random?number=1&apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}`
+          `https://api.spoonacular.com/recipes/random?apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}&number=9`
         );
+        setRecipes(response.data.recipes);
         setFeaturedRecipe(response.data.recipes[0]);
       } catch (error) {
-        console.error("Error fetching featured recipe:", error);
+        console.error("Error fetching recipes:", error);
       }
     };
-    fetchFeaturedRecipe();
+
+    fetchInitialRecipes();
   }, []);
 
-  useEffect(() => {
-    const fetchGridRecipes = async () => {
-      try {
-        let url = `https://api.spoonacular.com/recipes/random?number=9&apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}`;
-        if (selectedCuisine) {
-          url = `https://api.spoonacular.com/recipes/complexSearch?cuisine=${selectedCuisine}&number=9&apiKey=${process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY}`;
-        }
-        const response = await axios.get(url);
-        setGridRecipes(response.data.recipes);
-      } catch (error) {
-        console.error("Error fetching grid recipes:", error);
-      }
-    };
-    fetchGridRecipes();
-  }, [selectedCuisine]);
-
-  if (!featuredRecipe || gridRecipes.length === 0) {
-    return <div className="text-center py-20">Loading...</div>;
-  }
-
   return (
-    <div className="bg-gray-50 min-h-screen font-sans flex flex-col">
-      <Header />
-      <div className="container mx-auto px-6 lg:px-16 flex-1">
-        <SearchBar setGridRecipes={setGridRecipes} />
-        <section className="mt-8">
-          <h1 className="text-4xl font-bold text-gray-800">Discover Recipes</h1>
-          <p className="text-lg text-gray-600 mt-2">
-            Explore delicious meals curated just for you.
-          </p>
-        </section>
-        <section className="mt-10">
-          <h2 className="text-2xl font-semibold text-gray-700">
-            Featured Recipe
-          </h2>
-          <FeaturedRecipe recipe={featuredRecipe} />
-        </section>
-        <section className="mt-12">
-          <h2 className="text-2xl font-semibold text-gray-700">
-            Additional Recipes
-          </h2>
-          <RecipeList recipes={gridRecipes} />
-        </section>
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <SearchBar setGridRecipes={setRecipes} />
+        
+        {featuredRecipe && (
+          <div className="mt-8">
+            <FeaturedRecipe recipe={featuredRecipe} />
+          </div>
+        )}
+
+        <div className="mt-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {recipes.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            ))}
+          </div>
+        </div>
       </div>
-      <Footer />
     </div>
   );
 }
