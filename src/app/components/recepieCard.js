@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import useRecipeStore from "@/app/store/useStore";
+import CustomImage from './ui/CustomImage';
 
 const RecipeCard = ({ recipe }) => {
   const [hasImageError, setHasImageError] = useState(false);
@@ -15,11 +16,10 @@ const RecipeCard = ({ recipe }) => {
   return (
     <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
       <div className="relative overflow-hidden">
-        <img
-          src={hasImageError ? "/default-recipe-big.png" : recipe.image}
+        <CustomImage
+          src={recipe.image}
           alt={recipe.title}
-          className="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-300"
-          onError={handleImageError}
+          className="w-full h-48 object-cover rounded-t-xl"
         />
         <div className="absolute top-4 right-4">
           <button
@@ -46,20 +46,42 @@ const RecipeCard = ({ recipe }) => {
         </h3>
 
         <div className="flex flex-wrap gap-4 mb-4">
+          {console.log("Full recipe:", recipe)}
+          {console.log("Calories:", recipe.calories)}
+          {console.log("Nutrition:", recipe.nutrition)}
+
           {recipe.readyInMinutes && (
             <div className="flex items-center bg-orange-50 px-3 py-1 rounded-full">
               <span className="mr-2">⏱️</span>
-              <span className="text-sm text-orange-700">
+              <span className="text-sm text-orange-700 font-medium">
                 {recipe.readyInMinutes} min
               </span>
             </div>
           )}
-          {(recipe.nutrition?.nutrients?.[0]?.amount || recipe.calories) && (
+          
+          {recipe.servings && (
+            <div className="flex items-center bg-blue-50 px-3 py-1 rounded-full">
+              <span className="mr-2">👥</span>
+              <span className="text-sm text-blue-700 font-medium">
+                Serves {recipe.servings}
+              </span>
+            </div>
+          )}
+
+          {recipe.cuisines?.[0] && (
+            <div className="flex items-center bg-purple-50 px-3 py-1 rounded-full">
+              <span className="mr-2">🍳</span>
+              <span className="text-sm text-purple-700 font-medium">
+                {recipe.cuisines[0]}
+              </span>
+            </div>
+          )}
+
+          {recipe.dishTypes?.[0] && (
             <div className="flex items-center bg-green-50 px-3 py-1 rounded-full">
-              <span className="mr-2">🔥</span>
-              <span className="text-sm text-green-700">
-                {recipe.nutrition?.nutrients?.[0]?.amount || recipe.calories}{" "}
-                cal
+              <span className="mr-2">🍽️</span>
+              <span className="text-sm text-green-700 font-medium">
+                {recipe.dishTypes[0]}
               </span>
             </div>
           )}
