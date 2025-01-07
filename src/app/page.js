@@ -5,6 +5,7 @@ import RecipeCard from './components/recepieCard';
 import SearchBar from './components/searchBar';
 import FeaturedRecipe from './components/featuredRecepies';
 import Header from './components/header';
+import Footer from './components/footer';
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -47,6 +48,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );
