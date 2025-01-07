@@ -1,56 +1,130 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
-  // State to manage the visibility of the mobile menu
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
-  // Toggle menu visibility on mobile
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "/favorite", label: "Favorites" },
+    { href: "/about", label: "About" },
+  ];
 
   return (
-    <header className="bg-transparent shadow-md p-6">
-      <nav className="flex items-center justify-between flex-wrap">
-        <div className="flex items-center space-x-2">
-          <img src="/logo.png" alt="Logo" className="h-8 w-8" />
-          <span className="text-2xl font-bold text-orange-500">FoodApp</span>
-        </div>
+    <header
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white shadow-md py-4" : "bg-transparent py-6"
+      }`}
+    >
+      <nav className="container mx-auto px-6 lg:px-16">
+        <div className="flex items-center justify-between">
+          {/* Logo with design matching About page */}
+          <Link href="/" className="flex items-center space-x-3 group">
+            <div className="relative">
+              <div className="absolute -inset-2 bg-orange-500/20 rounded-lg transform rotate-3 group-hover:rotate-6 transition-transform"></div>
+              <img
+                src="/logo.png"
+                alt="FoodApp Logo"
+                className="h-10 w-10 relative transform group-hover:scale-105 transition-transform"
+              />
+            </div>
+            <span
+              className={`text-2xl font-bold ${
+                isScrolled ? "text-orange-500" : "text-orange-500"
+              }`}
+            >
+              FoodApp
+            </span>
+          </Link>
 
-        <ul className="flex space-x-6 text-gray-700 font-medium hidden md:flex">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/favorite">Favorites</Link></li>
-          <li><Link href="/about">About</Link></li>
-        </ul>
+          {/* Desktop Navigation */}
+          <ul className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className={`relative py-2 text-lg font-medium transition-colors
+                    ${
+                      pathname === link.href
+                        ? "text-orange-500"
+                        : "text-gray-700 hover:text-orange-500"
+                    }
+                    after:content-[''] after:absolute after:bottom-0 after:left-0 
+                    after:w-full after:h-0.5 after:bg-orange-500 
+                    after:transform after:scale-x-0 after:transition-transform
+                    hover:after:scale-x-100
+                  `}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-        <div className="md:hidden">
-          <button onClick={toggleMenu} className="text-gray-700">
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          >
             <svg
-              className="w-6 h-6"
+              className="w-6 h-6 text-gray-700"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                strokeLinecap="round" // updated
-                strokeLinejoin="round" // updated
-                strokeWidth="2" // updated
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
+              {isMenuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
             </svg>
           </button>
         </div>
-      </nav>
 
-      {isMenuOpen && (
-        <ul className="flex flex-col space-y-4 mt-4 md:hidden">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/favorite">Favorites</Link></li>
-          <li><Link href="/about">About</Link></li>
-        </ul>
-      )}
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg border-t">
+            <ul className="px-6 py-4 space-y-4">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`block py-2 text-lg ${
+                      pathname === link.href
+                        ? "text-orange-500 font-medium"
+                        : "text-gray-700 hover:text-orange-500"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </nav>
     </header>
   );
 };
