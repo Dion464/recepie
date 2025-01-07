@@ -1,65 +1,42 @@
-import { create } from "zustand";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-// Zustand store
-const useRecipeStore = create((set) => ({
-  // Initial state
-  favorites: [],
-  imageErrors: {},
+const useRecipeStore = create(
+  persist(
+    (set, get) => ({
+      recipeDetails: {},
+      favorites: [],
+      
+      setRecipeDetails: (id, details) => 
+        set((state) => ({
+          recipeDetails: { ...state.recipeDetails, [id]: details }
+        })),
 
-  // Actions for favorites
-  initializeFavorites: () => {
-    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    set({ favorites: storedFavorites });
-  },
+      toggleFavorite: (recipe) => 
+        set((state) => {
+          const isFavorited = state.favorites.some(fav => fav.id === recipe.id);
+          
+          if (isFavorited) {
+            return {
+              favorites: state.favorites.filter(fav => fav.id !== recipe.id)
+            };
+          } else {
+            return {
+              favorites: [...state.favorites, recipe]
+            };
+          }
+        }),
 
-  addFavorite: (recipe) => {
-    set((state) => {
-      const updatedFavorites = [...state.favorites, recipe];
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-      return { favorites: updatedFavorites };
-    });
-  },
-
-  removeFavorite: (recipeId) => {
-    set((state) => {
-      const updatedFavorites = state.favorites.filter(
-        (recipe) => recipe.id !== recipeId
-      );
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-      return { favorites: updatedFavorites };
-    });
-  },
-
-  isFavorite: (recipeId) => {
-    const { favorites } = useRecipeStore.getState();
-    return favorites.some((recipe) => recipe.id === recipeId);
-  },
-
-  // Actions for image error handling
-  setImageError: (recipeId) => {
-    set((state) => ({
-      imageErrors: { ...state.imageErrors, [recipeId]: true },
-    }));
-  },
-
-  resetImageError: (recipeId) => {
-    set((state) => {
-      const { [recipeId]: _, ...remainingErrors } = state.imageErrors;
-      return { imageErrors: remainingErrors };
-    });
-  },
-
-  // Handling recipe details
-  recipeDetails: {},
-
-  setRecipeDetails: (id, recipe) => {
-    set((state) => ({
-      recipeDetails: {
-        ...state.recipeDetails,
-        [id]: recipe,
-      },
-    }));
-  },
-}));
+      isFavorite: (id) => {
+        const state = get();
+        return state.favorites.some(recipe => recipe.id.toString() === id.toString());
+      }
+    }),
+    {
+      name: 'recipe-storage',
+      getStorage: () => localStorage,
+    }
+  )
+);
 
 export default useRecipeStore;

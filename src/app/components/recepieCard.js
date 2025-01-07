@@ -1,24 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import useRecipeStore from "@/app/store/useStore";
 
 const RecipeCard = ({ recipe }) => {
-  const { favorites, addFavorite, removeFavorite, isFavorite, imageErrors } =
-    useRecipeStore();
+  const [hasImageError, setHasImageError] = useState(false);
+  const { toggleFavorite, isFavorite } = useRecipeStore();
 
-  const isImageErrored = !!imageErrors[recipe.id];
+  if (!recipe) return null;
 
   const handleImageError = () => {
-    useRecipeStore.setState((state) => ({
-      imageErrors: { ...state.imageErrors, [recipe.id]: true },
-    }));
+    setHasImageError(true);
   };
 
   return (
     <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
       <div className="relative overflow-hidden">
         <img
-          src={isImageErrored ? "/default-recipe-big.png" : recipe.image}
+          src={hasImageError ? "/default-recipe-big.png" : recipe.image}
           alt={recipe.title}
           className="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-300"
           onError={handleImageError}
@@ -28,11 +26,7 @@ const RecipeCard = ({ recipe }) => {
             className={`flex items-center justify-center w-10 h-10 rounded-full backdrop-blur-md backdrop-filter bg-white/30 hover:bg-white/50 transition-all duration-300 ${
               isFavorite(recipe.id) ? "text-pink-500" : "text-gray-600"
             }`}
-            onClick={() =>
-              isFavorite(recipe.id)
-                ? removeFavorite(recipe.id)
-                : addFavorite(recipe)
-            }
+            onClick={() => toggleFavorite(recipe)}
           >
             <svg
               className={`w-6 h-6 ${

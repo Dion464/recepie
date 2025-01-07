@@ -1,37 +1,26 @@
 import Link from "next/link";
 import useRecipeStore from "@/app/store/useStore";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const FeaturedRecipe = ({ recipe }) => {
-  const { favorites, addFavorite, removeFavorite, isFavorite, setImageError } =
-    useRecipeStore();
-  const [imageError, setImageErrorState] = useState(false);
+  const { toggleFavorite, isFavorite } = useRecipeStore();
+  const [imageError, setImageError] = useState(false);
 
   const handleImageError = () => {
-    setImageErrorState(true);
-    setImageError(recipe.id);
+    setImageError(true);
   };
-
-  useEffect(() => {
-    if (isFavorite(recipe.id)) {
-      setImageErrorState(false);
-    }
-  }, [recipe.id, isFavorite]);
 
   return (
     <section className="relative bg-gradient-to-br from-orange-50/50 to-white p-8 md:p-12 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden group">
-      {/* Background pattern */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
 
       <div className="relative flex flex-col lg:flex-row items-center justify-between gap-12">
-        {/* Content Section */}
         <div className="flex flex-col w-full lg:w-1/2 space-y-6 animate-slideInFromLeft">
           <div className="space-y-4">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
               {recipe.title}
             </h1>
 
-            {/* Recipe quick info */}
             <div className="flex flex-wrap items-center gap-4">
               {recipe.readyInMinutes && (
                 <div className="flex items-center bg-orange-100/80 backdrop-blur-sm px-4 py-2 rounded-full">
@@ -89,11 +78,7 @@ const FeaturedRecipe = ({ recipe }) => {
                   ? "bg-pink-100 text-pink-600 hover:bg-pink-200"
                   : "bg-white text-gray-700 hover:bg-gray-100"
               } shadow-sm`}
-              onClick={() =>
-                isFavorite(recipe.id)
-                  ? removeFavorite(recipe.id)
-                  : addFavorite(recipe)
-              }
+              onClick={() => toggleFavorite(recipe)}
             >
               <svg
                 className={`w-6 h-6 ${
@@ -128,7 +113,6 @@ const FeaturedRecipe = ({ recipe }) => {
           </div>
         </div>
 
-        {/* Image Section */}
         <div className="w-full lg:w-1/2 animate-slideInFromRight">
           <div className="relative group rounded-2xl overflow-hidden shadow-xl">
             <img
