@@ -56,7 +56,7 @@ export default function SearchBar({ setGridRecipes }) {
   }, [query, selectedCategory]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 mt-4 sm:mt-8">
+    <div className="w-full max-w-4xl mx-auto px-4 mt-20 sm:mt-8">
       <div className="relative bg-white/40 backdrop-blur-md rounded-2xl shadow-lg p-4 sm:p-6 border border-white/30">
         <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div className="relative flex-1">
@@ -99,13 +99,13 @@ export default function SearchBar({ setGridRecipes }) {
           </button>
         </div>
 
-        <div className="mt-4 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
-          <div className="flex gap-2 min-w-max sm:flex-wrap">
+        <div className="mt-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+          <div className="flex gap-2 overflow-x-auto pb-2 sm:flex-wrap scrollbar-hide">
             {categories.map((category) => (
               <button
                 key={category.name}
                 onClick={() => handleCategorySelect(category.name)}
-                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all
+                className={`flex-none px-4 py-2 rounded-xl text-sm font-medium transition-all
                   flex items-center space-x-2 backdrop-blur-sm whitespace-nowrap
                   ${selectedCategory === category.name
                     ? "bg-orange-500/80 text-white shadow-md"
@@ -121,8 +121,8 @@ export default function SearchBar({ setGridRecipes }) {
 
         {searchResults.length > 0 && query && (
           <div className="absolute left-0 right-0 bg-white/60 backdrop-blur-md 
-            shadow-lg rounded-xl mt-2 overflow-hidden z-50 
-            border border-white/30 max-h-[60vh] overflow-y-auto">
+            shadow-lg rounded-xl mt-2 overflow-hidden z-30 
+            border border-white/30 max-h-[50vh] overflow-y-auto">
             <ul className="divide-y divide-gray-100/20">
               {searchResults.map((recipe) => (
                 <li
@@ -155,7 +155,7 @@ export default function SearchBar({ setGridRecipes }) {
                         </span>
                       )}
                       {recipe.cuisines?.length > 0 && (
-                        <span className="truncate">{recipe.cuisines[0]}</span>
+                        <span className="hidden sm:inline truncate">{recipe.cuisines[0]}</span>
                       )}
                     </div>
                   </div>
