@@ -43,20 +43,22 @@ export default function SearchBar({ setGridRecipes }) {
     }
   };
 
-  const handleCategorySelect = (categoryName) => {
-    setSelectedCategory(selectedCategory === categoryName ? null : categoryName);
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(selectedCategory === category ? null : category);
   };
 
   useEffect(() => {
-    const debounceTimeout = setTimeout(() => {
-      handleSearch();
+    const delayDebounceFn = setTimeout(() => {
+      if (query.trim() || selectedCategory) {
+        handleSearch();
+      }
     }, 500);
 
-    return () => clearTimeout(debounceTimeout);
+    return () => clearTimeout(delayDebounceFn);
   }, [query, selectedCategory]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 mt-20 sm:mt-8">
+    <div className="w-full max-w-4xl mx-auto px-4 mt-20 sm:mt-8 relative z-40">
       <div className="relative bg-white/40 backdrop-blur-md rounded-2xl shadow-lg p-4 sm:p-6 border border-white/30">
         <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div className="relative flex-1">
@@ -120,9 +122,9 @@ export default function SearchBar({ setGridRecipes }) {
         </div>
 
         {searchResults.length > 0 && query && (
-          <div className="absolute left-0 right-0 bg-white/60 backdrop-blur-md 
-            shadow-lg rounded-xl mt-2 overflow-hidden z-30 
-            border border-white/30 max-h-[50vh] overflow-y-auto">
+          <div className="absolute left-0 right-0 bg-white/95 backdrop-blur-md 
+            shadow-lg rounded-xl mt-2 overflow-hidden z-50
+            border border-white/30 max-h-[60vh] overflow-y-auto">
             <ul className="divide-y divide-gray-100/20">
               {searchResults.map((recipe) => (
                 <li
