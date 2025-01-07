@@ -24,7 +24,13 @@ export default function Header() {
               Home
             </Link>
             <Link 
-              href="/favorites" 
+              href="/about" 
+              className="text-gray-600 hover:text-orange-500 transition-colors"
+            >
+              About
+            </Link>
+            <Link 
+              href="/favorite" 
               className="flex items-center space-x-1 text-gray-600 hover:text-orange-500 transition-colors"
             >
               <span>Favorites</span>
@@ -78,7 +84,14 @@ export default function Header() {
                 Home
               </Link>
               <Link
-                href="/favorites"
+                href="/about"
+                className="text-gray-600 hover:text-orange-500 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                About
+              </Link>
+              <Link
+                href="/favorite"
                 className="flex items-center justify-between text-gray-600 hover:text-orange-500 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >

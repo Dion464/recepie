@@ -4,6 +4,7 @@ import axios from 'axios';
 import RecipeCard from './components/recepieCard';
 import SearchBar from './components/searchBar';
 import FeaturedRecipe from './components/featuredRecepies';
+import Header from './components/header';
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -26,24 +27,27 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <SearchBar setGridRecipes={setRecipes} />
-        
-        {featuredRecipe && (
-          <div className="mt-8">
-            <FeaturedRecipe recipe={featuredRecipe} />
-          </div>
-        )}
+    <>
+      <Header />
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-20">
+          <SearchBar setGridRecipes={setRecipes} />
+          
+          {featuredRecipe && (
+            <div className="mt-8">
+              <FeaturedRecipe recipe={featuredRecipe} />
+            </div>
+          )}
 
-        <div className="mt-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {recipes.map((recipe) => (
-              <RecipeCard key={recipe.id} recipe={recipe} />
-            ))}
+          <div className="mt-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {recipes.map((recipe) => (
+                <RecipeCard key={recipe.id} recipe={recipe} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
