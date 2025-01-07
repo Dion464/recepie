@@ -7,6 +7,12 @@ const FeaturedRecipe = ({ recipe }) => {
     useRecipeStore();
   const [imageError, setImageErrorState] = useState(false); // Local state for image errors
 
+  // Add console.log to see the recipe data
+  useEffect(() => {
+    console.log("Recipe data:", recipe);
+    console.log("Recipe nutrition:", recipe?.nutrition);
+  }, [recipe]);
+
   // Handle image loading errors
   const handleImageError = () => {
     setImageErrorState(true);
@@ -25,6 +31,30 @@ const FeaturedRecipe = ({ recipe }) => {
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
           {recipe.title}
         </h1>
+
+        {/* Recipe quick info */}
+        <div className="flex items-center space-x-6 text-gray-500">
+          {recipe.readyInMinutes && (
+            <div className="flex items-center">
+              <span className="mr-2">⏱️</span>
+              <span>Ready in {recipe.readyInMinutes} min</span>
+            </div>
+          )}
+          {(recipe.nutrition?.nutrients?.[0]?.amount ||
+            recipe.calories ||
+            recipe.nutrition?.calories) && (
+            <div className="flex items-center">
+              <span className="mr-2">🔥</span>
+              <span>
+                {recipe.nutrition?.nutrients?.[0]?.amount ||
+                  recipe.calories ||
+                  recipe.nutrition?.calories}{" "}
+                calories
+              </span>
+            </div>
+          )}
+        </div>
+
         <p className="text-lg text-gray-600">
           Discover a delightful culinary experience with this recipe!{" "}
           {recipe.description}

@@ -26,9 +26,23 @@ const RecipeCard = ({ recipe }) => {
         <h3 className="text-xl font-semibold text-gray-800 mb-2">
           {recipe.title}
         </h3>
-        <p className="text-gray-500 mb-4">
-          Ready in {recipe.readyInMinutes} min
-        </p>
+        <div className="flex items-center space-x-6 text-gray-500">
+          {recipe.readyInMinutes && (
+            <div className="flex items-center">
+              <span className="mr-2">⏱️</span>
+              <span>Ready in {recipe.readyInMinutes} min</span>
+            </div>
+          )}
+          {(recipe.nutrition?.nutrients?.[0]?.amount || recipe.calories) && (
+            <div className="flex items-center">
+              <span className="mr-2">🔥</span>
+              <span>
+                {recipe.nutrition?.nutrients?.[0]?.amount || recipe.calories}{" "}
+                calories
+              </span>
+            </div>
+          )}
+        </div>
 
         {/* Favorite button */}
         <button
