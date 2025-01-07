@@ -77,24 +77,32 @@ const FeaturedRecipe = ({ recipe }) => {
 
         <div className="flex items-center space-x-4 mt-4">
           <button
-            className="inline-block text-white p-2 rounded-full "
+            className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 ${
+              isFavorite(recipe.id)
+                ? "bg-pink-100 text-pink-600 hover:bg-pink-200"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            }`}
             onClick={() =>
               isFavorite(recipe.id)
                 ? removeFavorite(recipe.id)
                 : addFavorite(recipe)
             }
           >
-            <img
-              src={isFavorite(recipe.id) ? "/favorite2.webp" : "/favorit.jpg"}
-              alt="Favorite"
-              className="w-8 h-8"
-            />
+            <svg
+              className={`w-6 h-6 ${
+                isFavorite(recipe.id) ? "fill-pink-600" : "fill-gray-400"
+              } transition-colors duration-300`}
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+            <span>{isFavorite(recipe.id) ? "Saved" : "Save Recipe"}</span>
           </button>
 
           {/* View recipe button */}
           <Link
             href={`/recepie/${recipe.id}`}
-            className="mblock text-center bg-orange-500 text-white py-2 px-6 rounded-full hover:bg-orange-600 transition duration-200"
+            className="inline-block text-center bg-orange-500 text-white py-2 px-6 rounded-full hover:bg-orange-600 transition duration-200"
           >
             View Recipe Details
           </Link>
