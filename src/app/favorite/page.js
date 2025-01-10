@@ -2,19 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import useRecipeStore from "@/app/store/useStore";
 
 const FavoritesPage = () => {
-  const [favorites, setFavorites] = useState([]);
   const [imageError, setImageError] = useState({});
   const [filterCategory, setFilterCategory] = useState("all");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedFavorites =
-        JSON.parse(localStorage.getItem("favorites")) || [];
-      setFavorites(savedFavorites);
-    }
-  }, []);
+  const { favorites } = useRecipeStore();
 
   const handleImageError = (recipeId) => {
     setImageError((prev) => ({ ...prev, [recipeId]: true }));
@@ -30,12 +23,10 @@ const FavoritesPage = () => {
       ? favorites
       : favorites.filter((recipe) => recipe.category === filterCategory);
 
-  const removeFavorite = (recipeId) => {
-    const updatedFavorites = favorites.filter(
-      (recipe) => recipe.id !== recipeId
-    );
-    setFavorites(updatedFavorites);
-    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+  const { toggleFavorite } = useRecipeStore();
+
+  const removeFavorite = (recipe) => {
+    toggleFavorite(recipe);
   };
 
   return (
@@ -147,7 +138,7 @@ const FavoritesPage = () => {
                     {recipe.readyInMinutes} min
                   </span>
                   <button
-                    onClick={() => removeFavorite(recipe.id)}
+                    onClick={() => removeFavorite(recipe)}
                     className="text-red-500 hover:text-red-600 transition-colors"
                   >
                     <svg
